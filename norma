@@ -1,0 +1,32 @@
+PROGRAM NORM
+       
+       INTEGER N 
+       REAL Y(10), X(10), SUMM1, SUMM2, NORMA 
+       
+       PRINT *, 'digita il numero delle componenti dei vettori '
+       READ *, N 
+       
+       IF (N.EQ.0) THEN 
+          PRINT *, 'deve essere maggiore di 0'
+          STOP 
+       ELSE 
+          DO I=1,N 
+             PRINT *, 'digita il numero della ', I, '° componente'
+             READ *, X(I)
+          END DO 
+       
+          SUMM1=0 
+          DO I=1,N 
+             SUMM1=SUMM1+X(I)**2 
+          END DO 
+       
+          SUMM2=0 
+          DO I=1,N 
+             Y(I)=X(I)/SQRT(SUMM1)
+             SUMM2=SUMM2+Y(I)**2 
+          END DO 
+       
+          NORMA= SQRT(SUMM2)
+          PRINT*, NORMA  
+        END IF 
+        END 
