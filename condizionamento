@@ -1,0 +1,11 @@
+clear all
+clf
+
+n= input('digita un numero');
+x= linspace(1,n,n);
+for i=1:n
+   A= hilb(i)
+   num_cond(i)= rcond(A)
+end
+plot(x, num_cond, '-*')
+grid
