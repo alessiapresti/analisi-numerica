@@ -1,0 +1,60 @@
+PROGRAM GAUSSJORDAN 
+
+REAL*8 A(100,100)
+INTEGER N
+
+PRINT*, 'DIGITA IL GRADO DEL SISTEMA'
+READ*, N 
+
+DO I=1,N
+    DO J=1,2*N
+        A(I,J)=0
+    END DO 
+END DO 
+
+DO I=1,N 
+    DO J=1,N 
+        PRINT*, 'A(',I,',',J,')='
+        READ*, A(I,J)
+    END DO 
+END DO 
+
+DO J=N+1,2*N 
+    IF (J.EQ.N+I) THEN 
+        A(I,J)=A(I,J)+1
+    END IF 
+END DO 
+
+PRINT*, 'M='
+DO I=1,N 
+     PRINT*, (A(I,J),J=1,2*N)
+END DO 
+
+DO K=1,N 
+    DO I=1,N 
+        IF (I.NE.K) THEN 
+        A(I,K)=A(I,K)/A(K,K)
+            DO J=K+1,2*N 
+                A(I,J)=A(I,J)-A(I,K)*A(K,J)
+            END DO 
+        END IF 
+    END DO 
+END DO 
+
+PRINT*, 'M='
+DO I=1,N 
+    PRINT*, (A(I,J),J=1,2*N)
+END DO 
+
+DO I=1,2*N 
+    DO J=N+1,2*N 
+        A(I,J)=A(I,J)/A(I,I)
+    END DO 
+END DO 
+
+PRINT*, 'M='
+DO I=1,N
+    PRINT*, (A(I,J),J=1,N*2)
+END DO 
+
+END PROGRAM 
