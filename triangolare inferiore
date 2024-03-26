@@ -1,0 +1,39 @@
+PROGRAM TriangolareInferiore 
+
+REAL A(100,100), SOMMA 
+INTEGER N 
+
+PRINT *, 'INSERISCI IL GRADO DEL SISTEMA'
+READ *, N
+
+DO I=1,N
+    DO J=1,N
+        IF(I.GE.J) THEN 
+            PRINT *, 'A(',I,',',J,')='
+            READ *, A(I,J)
+        ELSE 
+        A(I,J)=O
+        END IF
+    ENDDO 
+ENDDO
+
+DO I=1,N
+    PRINT *, 'B(',I,')='
+    READ *, A(I,N+1)
+ENDDO
+
+DO I=1,N
+    PRINT *, (A(I,J),J=1,N),'|',A(I,N+1)
+ENDDO 
+
+DO I=1,N
+    SOMMA=0
+    DO J=I-1,1,-1
+        SOMMA=SOMMA+A(I,J)*A(J,J)
+    ENDDO
+    A(I,I)=(A(I,N+1)-SOMMA)/A(I,I)
+ENDDO 
+
+PRINT *, 'LE SOLUZINI DEL SISTEMA SONO: '
+PRINT*, '[',(A(I,I),I=1,N),']'
+END 
