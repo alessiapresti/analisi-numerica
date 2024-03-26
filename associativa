@@ -1,0 +1,44 @@
+       PROGRAM ASSOCIATIVA
+       
+       REAL X(3),Y(3),Z(3),A(3,3),SOMMA,SOMMA1(3)
+       
+       N=3
+       
+       DO I=1,N
+          PRINT *, 'X(' ,I, ')='
+          READ *, X(I)
+       END DO
+       
+       DO I=1,N 
+          PRINT *, 'Y(' ,I, ')='
+          READ *, Y(I)
+       END DO 
+       
+       DO I=1,N 
+          PRINT *, 'Z(' ,I, ')='
+          READ *, Z(I)
+       END DO
+       
+       DO I=1,N 
+          DO J=1,N 
+             A(I,J)=X(I)*Y(J)
+          END DO 
+       END DO 
+       
+       SOMMA=0 
+       DO I=1,N 
+          SOMMA=SOMMA+Y(I)*Z(I)
+       END DO 
+       
+       DO I=1,N 
+          SOMMA1(I)=0 
+          DO J=1,N 
+             SOMMA1(I)=SOMMA1(I)+Z(J)*A(I,J)
+          END DO 
+       
+       Z(I)=SOMMA1(I)
+       X(I)=X(I)*SOMMA
+       PRINT *, Z(I)
+       PRINT *, X(I)
+       END DO 
+       END 
