@@ -1,0 +1,19 @@
+% algoritmo babilonesi tramite matrici
+
+a= 250;
+tol= 10^-6;
+err= 1;
+
+x(1)=1;
+n=1;
+
+while (tol<err)
+   x(n+1)= 0.5*(x(n)+a/x(n));
+   err= abs(x(n+1)-x(n));
+   n= n+1;
+end
+
+valore = [a]
+radice = [a/x(n)]
+verifica = [x(n)]
+A = [ a, a/x(n), x(n) ]
