@@ -1,0 +1,48 @@
+PROGRAM CHOLESKY
+
+COMPLEX A(3,3), SOMMA, SOMMA2, DET, RADET
+INTEGER N
+
+N=3
+
+A(1,1)=3
+A(1,2)=2
+A(1,3)=-1
+A(2,1)=2
+A(2,2)=5
+A(2,3)=-2
+A(3,1)=-1
+A(3,2)=-2
+A(3,3)=3
+
+DO J=1,N
+    SOMMA=0
+    DO K=1,J-1
+        SOMMA=SOMMA+ABS(A(J,K)**2)
+    END DO 
+    A(J,J)=SQRT(A(J,J)-SOMMA)
+    IF (J.NE.N) THEN 
+        DO I=J+1,N
+            SOMMA2=0
+                DO K=I,J-1
+                    SOMMA2=SOMMA2+A(I,K)*CONJG(A(J,K))
+                END DO 
+            A(I,J)=1/(A(J,J)*(A(I,J)+SOMMA2))
+        END DO 
+    END IF
+END DO 
+
+DO I=1,N
+    PRINT*, (A(I,J), J=1,N)
+END DO 
+
+RADET=1
+DO J=1,N
+    RADET=RADER*A(J,J)
+    PRINT*, RADET
+END DO 
+    
+DET=RADET**2
+PRINT*, DET 
+    
+END 
