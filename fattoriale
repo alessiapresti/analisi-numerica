@@ -1,0 +1,10 @@
+%fattoriale a casa
+
+clear all
+clf
+
+fatt=1;
+n= input('digita un numero: ');
+for i=1:n
+   fatt= fatt*i
+end   
