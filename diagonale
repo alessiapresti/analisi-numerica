@@ -1,0 +1,33 @@
+PROGRAM DIAGONALE
+
+REAL A(100,100)
+INTEGER N 
+
+N=3
+
+DO I=1,N 
+    DO J=1,N 
+        IF (I.EQ.J) THEN 
+            PRINT *, 'A(',I,',',J,')='
+            READ *, A(I,J)
+        ELSE 
+        A(I,J)=0 
+        END IF 
+    ENDDO
+ENDDO 
+
+DO I=1,N 
+    PRINT *, 'B(', I, ')='
+    READ *, A(I,N+1)
+ENDDO 
+
+DO I=1,N
+    PRINT *, (A(I,J), J=1,N),'|', A(I,N+1)
+ENDDO 
+
+DO I=1,N
+    A(I,I)=A(I,N+1)/A(I,I)
+ENDDO
+PRINT*, 'LE SOLUZIONI SONO: '
+PRINT*, '[',(A(I,I),I=1,N),']'
+END 
