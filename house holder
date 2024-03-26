@@ -1,0 +1,358 @@
+
+A= [ 1 1 1; 2 -1 -1; 2 -4 5]
+
+
+A =
+
+1 1 1
+2 -1 -1
+2 -4 5
+
+
+a1= A(:,1)
+
+
+a1 =
+
+1
+2
+2
+
+
+norm(a1)
+
+
+ans =
+
+3
+
+
+abs(a1(1,1))
+
+
+ans =
+
+1
+
+
+teta1= a1(1,1)/abs(a1(1,1))
+
+
+teta1 =
+
+1
+
+
+beta1= 1/(norm(a1)*(norm(a1)+abs(a1(1,1))))
+
+
+beta1 =
+
+0.0833
+
+
+v1= [ teta1*(norm(a1)+abs(a1(1,1))); a1(2,1); a1(3,1)]
+
+
+v1 =
+
+4
+2
+2
+
+
+P1= eye(3)-beta1*v1*v1'
+
+
+P1 =
+
+-0.3333 -0.6667 -0.6667
+-0.6667 0.6667 -0.3333
+-0.6667 -0.3333 0.6667
+
+
+A2=P1*A
+
+
+A2 =
+
+-3.0000 3.0000 -3.0000
+0.0000 -0.0000 -3.0000
+0.0000 -3.0000 3.0000
+
+
+a2=A2(2:3,2)
+
+
+a2 =
+
+-0.0000
+-3.0000
+
+
+norm(a2)
+
+
+ans =
+
+3.0000
+
+
+abs(a2(1,1))
+
+
+ans =
+
+2.2204e-16
+
+
+abs(a2(2,2))
+
+Index in position 2 exceeds array bounds. Index must not exceed 1.
+
+abs(a2(1,1))
+
+
+ans =
+
+2.2204e-16
+
+
+abs(a2)
+
+
+ans =
+
+0.0000
+3.0000
+
+
+abs(a2(1,2))
+
+Index in position 2 exceeds array bounds. Index must not exceed 1.
+
+abs(a2(2,1))
+
+
+ans =
+
+3.0000
+
+
+abs(a2(1,1))
+
+
+ans =
+
+2.2204e-16
+
+
+teta2=a2(2,1)/abs(a2(2,1))
+
+
+teta2 =
+
+-1
+
+
+norm(a29
+
+norm(a29
+↑
+Invalid expression. When calling a function or indexing a variable, use parentheses.
+Otherwise, check for mismatched delimiters.
+
+Did you mean:
+
+norm(a2)
+
+
+ans =
+
+3.0000
+
+
+beta2= 1//norm(a2)*(norm(a2)+abs(a2(2,1))))
+
+beta2= 1//norm(a2)*(norm(a2)+abs(a2(2,1))))
+↑
+Invalid use of operator.
+
+beta2= 1/(norm(a2)*(norm(a2)+abs(a2(2,1))))
+
+
+beta2 =
+
+0.0556
+
+
+v2= [ 0; teta2*(norm(a2)+abs(a2(2,1)))
+
+
+; a2(3,1)]
+
+Index in position 1 exceeds array bounds. Index must not exceed 2.
+
+v2= [0; teta2*(norm(a2)+abs(a2(2,1))); a2(2,1
+
+)]
+
+v2= [0; teta2*(norm(a2)+abs(a2(2,1))); a2(2,1
+↑
+Invalid expression. When calling a function or indexing a variable, use parentheses.
+Otherwise, check for mismatched delimiters.
+
+Did you mean:
+
+v2= [0; teta2*(norm(a2)+abs(a2(2,1))); a2(2,1)]
+
+
+v2 =
+
+0
+-6.0000
+-3.0000
+
+
+P2= eye(3)-beta2*v2*v2'
+
+
+P2 =
+
+1.0000 0 0
+0 -1.0000 -1.0000
+0 -1.0000 0.5000
+
+
+A3=P2*A2
+
+
+A3 =
+
+-3.0000 3.0000 -3.0000
+-0.0000 3.0000 -0.0000
+-0.0000 -1.5000 4.5000
+
+
+R=A3
+
+
+R =
+
+-3.0000 3.0000 -3.0000
+-0.0000 3.0000 -0.0000
+-0.0000 -1.5000 4.5000
+
+
+Q=P1*P2
+
+
+Q =
+
+-0.3333 1.3333 0.3333
+-0.6667 -0.3333 -0.8333
+-0.6667 -0.3333 0.6667
+
+
+Q*R
+
+
+ans =
+
+1.0000 2.5000 2.5000
+2.0000 -1.7500 -1.7500
+2.0000 -4.0000 5.0000
+
+non mi da A perchè la norma di a2(1,1) non esce 0
+
+abs(a2(2,1))
+
+
+ans =
+
+3.0000
+
+
+abs(a2(:,1))
+
+
+ans =
+
+0.0000
+3.0000
+
+
+abs(a2(1,1))
+
+
+ans =
+
+2.2204e-16
+
+
+abs(a2(2,1))
+
+
+ans =
+
+3.0000
+
+
+beta2= 1/ (norm(a2)*(norm(a2)*abs(a2(2,1))))
+
+
+beta2 =
+
+0.0370
+
+
+beta2=1/ (norm(a2)*(norm(a2)+abs(a2(1,1))))
+
+
+beta2 =
+
+0.1111
+
+
+abs(a2(1,1))
+
+
+ans =
+
+2.2204e-16
+
+
+a2
+
+
+a2 =
+
+-0.0000
+-3.0000
+
+
+a2(1,1)
+
+
+ans =
+
+-2.2204e-16
+
+
+ 
+Per Cholesky uso la function chol(A)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
