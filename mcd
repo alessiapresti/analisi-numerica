@@ -1,0 +1,15 @@
+% calcolo del MCD tramite il metodo di Euclide
+
+a = input("digita un fattore a: ");
+b= input("digita un fattore b: ");
+
+while (a-b)~=0
+   if a>b then
+      a = a-b;
+   else
+      b = b-a;
+   end
+end
+
+disp("Il MCD è: ")
+disp(a)
