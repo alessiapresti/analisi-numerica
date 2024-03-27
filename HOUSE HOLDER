@@ -1,0 +1,46 @@
+! MEODO DI HOUSE HOLDER 
+
+PROGRAM HH
+REAL A(10,10), Q(10,10), R(10,10), D(10), C(10) 
+REAL TETA1, NORMA1, TETA2, NORMA2, TETA3, NORMA3 
+REAL ALPHA, BETA1, BETA2, BETA3, TAU 
+INTEGER N 
+
+N=3
+
+A(1,1)=1
+A(1,2)=1
+A(1,3)=1
+A(2,1)=2
+A(2,2)=-1
+A(2,3)=-1
+A(3,1)=2
+A(3,2)=-4
+A(3,3)=5
+
+DO J=1,N-1 
+    NORMA1=0
+    DO I=J,N
+        NORMA1=NORMA1+A(I,J)**2 
+    END DO 
+    NORMA1=SQRT(NORMA1)
+! SIGN(VALORE,SEGNO): FUNZIONE CHE ASOCIA IL SEGNO DEL 2° AL VALORE ASSOLUTO DEL 1°
+    TETA1= A(I,I)/NORMA1
+    ALPHA=SIGN(NORMA1,A(J,J))
+    
+    A(J,J)=A(J,J)+ALPHA 
+    D(J)=-ALPHA 
+    C(J)=ALPHA*A(J,J) 
+    DO K=J+1,N
+        SUM=0
+        DO I=J,N 
+            SUM=SUM+A(I,J)*A(I,K)
+        END DO 
+        TAU=SUM/C(J) 
+        DO I=J,N 
+            A(I,K)=A(I,K)-TAU*A(I,J)
+        END DO 
+    END DO 
+END DO 
+D(N)=A(N,N)
+END 
