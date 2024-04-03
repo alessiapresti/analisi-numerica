@@ -1,0 +1,133 @@
+PROGRAM GAUSSSEIDEL  
+
+REAL A(10,10),R(10,10),B(10),C(10,10),D(10,10),X(10)
+REAL SOMMA1, SOMMA2, SOMMA3, M(10,10) 
+INTEGER N
+
+N=3 
+A(1,1)=4
+A(1,2)=1
+A(1,3)=1
+A(2,1)=2
+A(2,2)=-1
+A(2,3)=0
+A(3,1)=0
+A(3,2)=-8
+A(3,3)=-6
+B(1)=6
+B(2)=-7
+B(3)=-14  
+
+!Ax=b 
+!METODO: A=D-R-C 
+!M=(D-R)^(-1)C
+
+PRINT*, 'A= '
+DO I=1,N
+    PRINT*, (A(I,K), K=1,N)
+END DO
+
+PRINT*, 'B= '
+DO I=1,N
+    PRINT*, B(I) 
+END DO 
+
+SOMMA1=0 
+DO I=1,N
+    DO J=1,N 
+        SOMMA1=SOMMA1+A(I,J)/A(I,I)
+    END DO 
+END DO 
+
+SOMMA2=0
+DO I=1,N 
+    DO J=1,I-1
+        SOMMA2=SOMMA2+(-A(I,J))/A(I,I)
+    END DO 
+END DO 
+
+SOMMA3=0
+DO I=1,N 
+    DO J=I+1,N
+        SOMMA3=SOMMA3+(A(I,J))/A(I,I)
+    END DO 
+END DO 
+    
+DO I=1,N
+    DO J=1,N 
+        IF (I.NE.J) THEN
+            X(I)=B(I)/A(I,I)-SOMMA1*X(J)
+        ELSE 
+            X(I)=B(I)/A(I,I)+SOMMA2*X(J)+SOMMA3*X(J)
+        END IF 
+    END DO 
+END DO 
+
+DO I=1,N 
+    DO J=1,N 
+        IF (I.EQ.J) THEN 
+            D(I,J)=A(I,J)
+        ELSE 
+            D(I,J)=0 
+        END IF 
+    END DO 
+END DO 
+PRINT*, 'D= '
+DO I=1,N
+    PRINT*, (D(I,J), J=1,N)
+END DO 
+
+DO I=1,N 
+    DO J=1,N 
+        IF (I.GT.J) THEN
+            R(I,J)=-(A(I,J))
+        ELSE 
+            R(I,J)=0
+        END IF 
+    END DO
+END DO 
+PRINT*, 'R= '
+DO I=1,N
+    PRINT*, (R(I,J), J=1,N)
+END DO 
+
+DO I=1,N 
+    DO J=1,N 
+        IF (I.LT.J) THEN 
+            C(I,J)=-(A(I,J))
+        ELSE 
+            C(I,J)=0
+        END IF 
+    END DO
+END DO 
+PRINT*, 'C= '
+DO I=1,N
+    PRINT*, (C(I,J), J=1,N)
+END DO 
+
+DO I=1,N 
+    DO J=1,N 
+        M(I,J)= (D(I,J)*R(I,J))**(-1)*C(I,J) 
+    END DO 
+END DO 
+PRINT*, 'M= '
+DO I=1,N 
+    PRINT*, (M(I,J), J=1,N)
+END DO 
+
+DO I=1,N 
+    DO J=1,N 
+        X(I)=(D(I,J))**(-1)*B(I)
+    END DO 
+END DO 
+
+! DOVREI SISTEMARE PER AVERE 
+!X(k)=D^(-1)*R*X(k)+D^(-1)*C*X(k-1)+D^(-1)*b 
+
+PRINT*, 'X= '
+DO I=1,N 
+    PRINT*, X(I)
+END DO 
+
+!VOGLIO CALCOLATO RAGGIO SPETTRALE E NUMERO ITERAZIONI 
+END 
