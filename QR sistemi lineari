@@ -1,0 +1,99 @@
+!METODO QR
+
+PROGRAM QR
+
+REAL*8 A(10,10), Q(10,10),R(10,10), V(10,10) 
+INTEGER N
+
+PRINT*, 'GRADO DELLA MATRICE: '
+READ*, N
+
+DO I=1,N
+    DO K=1,N 
+        PRINT*, 'A(',I,',',K,')='
+        READ*, A(I,K)
+    END DO 
+END DO 
+
+PRINT*, 'A='
+
+DO I=1,N 
+    PRINT*, (A(I,K), K=1,N)
+END DO 
+
+DO I=1,N 
+    PRINT*, 'B(',I,')='
+    READ*, A(I,N+1) 
+END DO 
+
+PRINT*, 'B='
+
+DO I=1,N 
+    PRINT*, A(I,N+1) 
+END DO 
+
+PRINT*, 'A|B' 
+
+DO I=1,N
+    PRINT *, (A(I,K), K=1,N),'|', A(I,N+1)
+END DO 
+
+DO I=1,N
+    A(I,I)=A(I,N+1)/A(I,I)
+END DO 
+
+!R è LA MATRICE DIAGONALE 
+
+DO I=1,N 
+    DO K=1,N 
+        IF (I.EQ.K) THEN 
+            R(I,K)=A(I,K)
+        ELSE 
+            R(I,K)=0
+        END IF 
+    END DO
+END DO 
+
+PRINT*, 'R='
+
+DO I=1,N 
+    PRINT*, (R(I,K), K=1,N)
+END DO
+
+!Q è LA MATRICE TRIANGOLARE SUPERIORE 
+
+DO I=1,N 
+    DO K=1,N 
+        IF (I.LE.K) THEN
+            Q(I,K)=A(I,K)
+        ELSE 
+            Q(I,K)=0
+        END IF 
+    END DO 
+END DO 
+
+PRINT*, 'Q='
+
+DO I=1,N 
+    PRINT*, (Q(I,K), K=1,N)
+END DO 
+
+!V è LA MATRICE PER LA VERIFICA 
+
+DO I=1,N
+    DO K=1,N+1
+        V(I,K)=Q(I,K)*R(I,K)
+    END DO 
+END DO 
+
+!VERIFICA AL COMPILATORE DEL METODO 
+
+DO I=1,N 
+    DO K=1,N+1 
+        IF (V(I,K).EQ.A(I,K)) THEN
+            PRINT*, 'è CORRETTO'
+        END IF 
+    END DO 
+END DO 
+
+END  
