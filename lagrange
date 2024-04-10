@@ -1,0 +1,36 @@
+program lagrange 
+
+       integer, parameter :: nn=200
+       real*8 a,b, xg(0:nn), yg(0:nn), h, x(0:nn), y(0:nn) 
+       integer n, i, ng 
+       
+       print*, 'Polinomio di Lagrange: nodi equidistanti' 
+       print*, 'digitare il grado del polinomio'
+       read(*,*) n
+       
+       OPEN(90,STATUS='UNKNOWN',ACCESS='SEQUENTIAL',FILE='dati_Lagrange.out')
+       
+       ng=100
+       a=-5
+       b=5
+       h=(b-a)/ng
+       
+       do i=0,ng
+		xg(i)=a+i*h 
+		yg(i)=1./(xg(i)**2+1)
+		WRITE (90,*) xg(i),yg(i) 
+	   end do 
+	   
+	   h=(b-a)/n 
+	   print*, 'i nodi sono: '
+	   do i=0,n
+		x(i)=a+i*h 
+		y(i)=1./(x(i)**2+1) 
+		print*, x(i), y(i) 
+	   end do 
+	   
+	   close(90) 
+	   
+	   end program 
+ 
+ 
