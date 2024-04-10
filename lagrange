@@ -33,4 +33,21 @@ program lagrange
 	   
 	   end program 
  
+
+
+clear all 
+clf 
+
+fname=['dati_Lagrange.out'];
+fid=fopen(fname);
+data=fscanf(fid,'%g', [2,inf]);
+status=fclose(fid); 
+
+xg=data(1,:);
+yg=data(2,:);
+
+figure(1)
+plot(xg,yg)
+legend('differitate','errore')
+grid 
  
