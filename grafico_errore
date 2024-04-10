@@ -1,0 +1,16 @@
+clear all 
+clf 
+
+fname=['dati1.out'];
+fid=fopen(fname);
+data=fscan(fid,'%g %g', [2,inf]);
+status=fclose; 
+
+eps=data(1,:);
+er=data(2,:);
+
+figure(1)
+semilogy(k,esp,'-*',k,er,'-o')
+legend('differitate','errore')
+grid 
+
