@@ -1,0 +1,228 @@
+PROGRAM QR
+   IMPLICIT NONE
+   
+   REAL, DIMENSION(20,20)     ::A,V,I_N,SOMMA_M,A_I
+   REAL, DIMENSION(20,20,20) ::P
+   REAL, DIMENSION(20)         ::D,C,BETA
+   INTEGER                      ::N,M,I,J,K,L,E,F
+   REAL                         ::NORMA2,ALPHA,SOMMA,TAU
+   INTEGER                      ::P_C
+   
+   PRINT*,'SCRIVI IL NUMERO DI RIGHE DELLA MATRICE:'
+   READ*,N
+   
+   PRINT*,'SCRIVI IL NUMERO DI COLONNE DELLA MATRICE:'
+   READ*,M
+   
+   IF (N < M) THEN
+      DO I=1,N
+         DO J=1,M
+            PRINT*,'A(',I,',',J,')='
+            READ*,A_I(I,J)
+         END DO
+      END DO
+      DO I=1,N
+         PRINT*,(A_I(I,J),J=1,M)
+      END DO
+      DO I=1,N
+         DO J=1,M
+            A(J,I)=A_I(I,J)
+         END DO
+      END DO
+      P_C=1
+      E=N
+      N=M
+      M=E
+      DO I=1,N
+         PRINT*,(A(I,J),J=1,M)
+      END DO
+   ELSE IF (N >= M) THEN
+      DO I=1,N
+         DO J=1,M
+            PRINT*,'A(',I,',',J,')='
+            READ*,A(I,J)
+         END DO
+      END DO
+      DO I=1,N
+         PRINT*,(A(I,J),J=1,M)
+      END DO
+      P_C=0
+   END IF
+   
+   DO I=1,N
+      DO J=1,N
+         IF (I == J) THEN
+            I_N(I,J)=1
+         ELSE
+            I_N(I,J)=0
+         END IF
+      END DO
+   END DO
+   
+   IF (N == M) THEN
+      F=N-1
+   ELSE
+      F=M
+   END IF
+   
+   DO K=1,F
+   
+      NORMA2=0
+      DO I=K,N
+         NORMA2=NORMA2+A(I,K)**2
+      END DO
+      NORMA2=SQRT(NORMA2)
+      
+      ALPHA=SIGN(NORMA2,A(K,K))
+      
+      A(K,K)=A(K,K)+ALPHA
+      
+      V(K,K)=A(K,K)
+      
+      D(K)=-ALPHA
+      
+      C(K)=ALPHA*A(K,K)
+      
+      BETA(K)=1/C(K)
+      
+      DO J=K+1,M
+         SOMMA=0
+         DO I=K,N
+            SOMMA=SOMMA+A(I,K)*A(I,J)
+         END DO
+         TAU=SOMMA/C(K)
+         DO I=K,N
+            A(I,J)=A(I,J)-TAU*A(I,K)
+         END DO
+      END DO
+      
+      A(K,K)=-ALPHA
+   
+   END DO
+   
+   DO K=1,F
+      DO I=1,N
+         IF (I < K) THEN
+            V(I,K)=0
+         ELSE IF (I > K) THEN
+            V(I,K)=A(I,K)
+         END IF
+      END DO
+   END DO
+   
+   DO I=1,F
+      PRINT*,'IL VETTORE V(',I,') è:'
+      PRINT*,'[',(V(K,I),K=1,N),']'
+   END DO
+   
+   DO K=1,F
+      DO I=1,N
+         DO J=1,N
+            P(I,J,K)=I_N(I,J)-BETA(K)*V(I,K)*V(J,K)
+         END DO
+      END DO
+   END DO
+   
+   PRINT*,'----------------------------------------------------------'
+   
+   DO K=1,F
+      PRINT*,'LA MATRICE P(',K,') è:'
+      DO I=1,N
+         PRINT*,(P(I,J,K),J=1,N)
+      END DO
+      PRINT*,'------------------------------------------------------------'
+   END DO
+   
+   DO K=1,F-1
+      DO I=1,N
+         DO J=1,N
+            SOMMA_M(I,J)=0
+            DO L=1,N
+               SOMMA_M(I,J)=SOMMA_M(I,J)+P(I,L,K)*P(L,J,K+1)
+            END DO
+         END DO
+      END DO
+      DO I=1,N
+         DO J=1,N
+            P(I,J,K+1)=SOMMA_M(I,J)
+         END DO
+      END DO
+   END DO
+   
+   DO I=1,N
+      DO J=1,N
+         IF (I > J) THEN
+            A(I,J)=0
+         END IF
+      END DO
+   END DO
+   
+   IF (P_C == 1) THEN
+      DO I=1,N
+         DO J=1,M
+            SOMMA=0
+            DO L=1,N
+               SOMMA=SOMMA+P(I,L,F)*A(L,J)
+            END DO
+            P(I,J,F+1)=SOMMA
+         END DO
+      END DO
+   ELSE
+      DO I=1,M
+         DO J=1,N
+            SOMMA=0
+            DO L=1,N
+               SOMMA=SOMMA+P(I,L,F)*A(L,J)
+            END DO
+            P(I,J,F+1)=SOMMA
+         END DO
+      END DO
+   END IF
+   
+   DO I=1,N
+      DO J=1,M
+         SOMMA=0
+         DO L=1,N
+            SOMMA=SOMMA+P(I,L,F)*A(L,J)
+         END DO
+         P(I,J,F+1)=SOMMA
+      END DO
+   END DO
+   
+   IF  (P_C == 1 ) THEN
+   
+      PRINT*,'LA MATRICE Q è:'
+      DO J=1,N
+         PRINT*,(P(J,I,F),I=1,N)
+      END DO
+      
+      PRINT*,'LA MATRICE R è:'
+      DO J=1,M
+         PRINT*,(A(J,I),I=1,N)
+      END DO
+      
+      PRINT*,'LA MATRICE Q*R è:'
+      DO J=1,M
+         PRINT*,(P(J,I,F+1),I=1,N)
+      END DO
+      
+   ELSE
+   
+      PRINT*,'LA MATRICE Q è:'
+      DO I=1,N
+         PRINT*,(P(I,J,F),J=1,N)
+      END DO
+      
+      PRINT*,'LA MATRICE R è:'
+      DO I=1,N
+         PRINT*,(A(I,J),J=1,M)
+      END DO
+      
+      PRINT*,'LA MATRICE Q*R è:'
+      DO I=1,N
+         PRINT*,(P(I,J,F+1),J=1,M)
+      END DO
+      
+   END IF
+   
+END PROGRAM
