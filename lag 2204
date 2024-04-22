@@ -1,0 +1,73 @@
+program lagrange 
+
+       integer, parameter :: nn=200
+       real*8 a,b, xg(0:nn), yg(0:nn), h, x(0:nn), y(0:nn), L(0:nn), pn(0:nn) 
+       integer n, i, j, k, ng 
+       
+       print*, 'Polinomio di Lagrange: nodi equidistanti' 
+       print*, 'digitare il grado del polinomio'
+       read(*,*) n
+       
+       OPEN(90,STATUS='UNKNOWN',ACCESS='SEQUENTIAL',FILE='dati_Lagrange_2204.out')
+       
+       ng=100
+       a=-5
+       b=5
+       h=(b-a)/ng
+       
+       do i=0,ng
+		pn(i)=0
+		xg(i)=a+i*h 
+		yg(i)=1./(xg(i)**2+1)
+	   end do 
+	   
+	   h=(b-a)/n 
+	   print*, 'i nodi sono: '
+	   do i=0,n
+		x(i)=a+i*h 
+		y(i)=1./(x(i)**2+1) 
+		print*, x(i), y(i) 
+	   end do 
+	   
+	   do k=0,ng
+		do i=0,n 
+			L(i)=1 
+			do j=0,n
+				if (i.ne.j) then 
+					L(i)=L(i)*(xg(k)-x(j))/(x(i)-x(j))
+				end if 
+			end do 
+		    pn(k)=pn(k)+y(i)*L(i) 
+		end do
+	    WRITE (90,*) xg(k),yg(k), pn(k) 
+	   end do 
+	   
+
+	   
+	   
+	   close(90) 
+	   
+	   end program 
+ 
+
+
+clf
+
+fname=['dati_Lagrange_2204.out'];
+fid=fopen(fname); 
+data=fscanf(fid,'%g %g %g', [3,inf]);
+status=fclose(fid); 
+
+xg=data(1,:);
+yg=data(2,:);
+pn=data(3,:);
+er=abs(pn-yg)
+
+figure(1)
+%semilogy(k,data(:,1),k,data(:,2))
+
+figure(1)
+plot(xg,yg,xg,pn)
+figure(2)
+plot(er)
+legend('funzione di Runge') 
