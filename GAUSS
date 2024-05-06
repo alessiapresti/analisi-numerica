@@ -1,94 +1,97 @@
 PROGRAM GAUSS
 
-REAL*8 A(100,100), B(100), X(100), L(100,100),U(100,100), DET 
-INTEGER N
+        REAL*8 A(100,100), B(100), X(100), L(100,100),U(100,100), DET 
+        INTEGER N
 
-PRINT*, 'DIGITA IL GRADO DEL SISTEMA'
-READ*, N
+        PRINT*, 'DIGITA IL GRADO DEL SISTEMA'
+        READ*, N
 
-DO I=1,N
-    DO K=1,N
-        PRINT*, 'A(,',I,',',K,')='
-        READ*, A(I,K)
-    END DO
-END DO 
+        DO I=1,N
+            DO K=1,N
+                PRINT*, 'A(,',I,',',K,')='
+                READ*, A(I,K)
+            END DO
+        END DO 
 
-DO I=1,N
-    PRINT*, 'B(',I,')='
-    READ*, B(I)
-END DO
-
-A(I,N+1)=B(I) 
-DO I=1,N
-    PRINT*, (A(I,K), K=1,N),'|',A(I,N+1)
-END DO 
-
-! LA MATRICE A ORLATA B HA ORDINE (N,N+1)
-! I è L'INDICE DI RIGA, K è L'INDICE DI COLONNA 
-
-DO K=1,N-1
-    DO I=K+1,N
-        DO J=K+1,N 
-            A(I,J)=A(I,J)-A(I,K)*A(K,J)
-            PRINT*, A(I,J)
+        DO I=1,N
+            PRINT*, 'B(',I,')='
+            READ*, B(I)
         END DO
-        A(I,N+1)=A(I,N+1)-A(I,K)*A(K,N+1)
-    END DO 
-END DO 
 
-! QUESTE SONO LE MATRICI CON I MOLTIPLICATORI 
+        A(I,N+1)=B(I) 
+        DO I=1,N
+            PRINT*, (A(I,K), K=1,N),'|',A(I,N+1)
+        END DO 
 
-DO I=1,N
-    DO K=1,N 
-        L(I,K)=0 
-        U(I,K)=0 
-! A=L*U 
-    END DO
-END DO 
+        ! LA MATRICE A ORLATA B HA ORDINE (N,N+1)
+        ! I è L'INDICE DI RIGA, K è L'INDICE DI COLONNA 
 
-DO I=1,N 
-    DO K=1,N 
-        U(I,K)=A(I,K) 
-    END DO 
-END DO 
+        PRINT*, 'MOLTIPLICATORI' 
+        DO K=1,N-1
+            DO I=K+1,N
+                DO J=K+1,N 
+                    A(I,J)=A(I,J)-A(I,K)*A(K,J)
+                    PRINT*, A(I,J)
+                END DO
+                A(I,N+1)=A(I,N+1)-A(I,K)*A(K,N+1)
+            END DO 
+        END DO 
 
-DO K=1,N-1
-    DO I=K+1,N 
-        L(I,K)=-(A(I,K)) 
-    END DO 
-    L(K,K)=1
-END DO 
+        ! QUESTE SONO LE MATRICI CON I MOLTIPLICATORI 
 
-DO I=1,N 
-    PRINT*, 'LA MATRICE U è'
-    PRINT*, (U(I,K),K=1,N)
-END DO 
+        DO I=1,N
+            DO K=1,N 
+                L(I,K)=0 
+                U(I,K)=0 
+        ! A=L*U 
+            END DO
+        END DO 
 
-DO I=1,N 
-    PRINT*, 'LA MATRICE L è'
-    PRINT*, (L(I,K),K=1,N)
-END DO 
+        DO I=1,N 
+            DO K=1,N 
+                U(I,K)=A(I,K) 
+            END DO 
+        END DO 
 
-DET=1
-A(I,K)=U(I,K)*L(I,K)
-DO I=1,N 
-    DET=DET*A(I,I)
-    PRINT*, 'DET(A)=', DET 
-END DO 
+        DO K=1,N
+            DO I=K+1,N 
+                L(I,K)=-(A(I,K)) 
+            END DO 
+            L(K,K)=1
+        END DO 
 
-X(N)=B(N)/A(N,N)
-DO K=N,1,-1
-    X(I)=B(I)
-    DO I=K+1,N
-        X(I)=X(I)-A(I,K)*X(K)
-    END DO 
-    X(I)=X(I)/A(I,I)
-END DO 
+        PRINT*, 'LA MATRICE U è'
+        DO I=1,N 
+            PRINT*, (U(I,K),K=1,N)
+        END DO 
 
-! QUESTE SONO LE SOLUZIONI  
+        PRINT*, 'LA MATRICE L è'
+        DO I=1,N 
+            PRINT*, (L(I,K),K=1,N)
+        END DO 
 
-DO I=1,N
-    PRINT*, 'LE SOLUZIONI SONO',X(I)
-END DO 
+        PRINT*, 'DET(A)=' 
+        DET=1
+        A(I,K)=U(I,K)*L(I,K)
+        DO I=1,N 
+            DET=DET*A(I,I)
+            PRINT*, DET 
+        END DO 
 
-END PROGRAM 
+        X(N)=B(N)/A(N,N)
+        DO K=N,1,-1
+            X(I)=B(I)
+            DO I=K+1,N
+                X(I)=X(I)-A(I,K)*X(K)
+            END DO 
+            X(I)=X(I)/A(I,I)
+        END DO 
+
+        ! QUESTE SONO LE SOLUZIONI  
+
+        PRINT*, 'LE SOLUZIONI SONO'
+        DO I=1,N
+            PRINT*, X(I)
+        END DO 
+
+        END PROGRAM 
