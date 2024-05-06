@@ -12,7 +12,7 @@ DO I=1,N
             PRINT *, 'A(',I,',',J,')='
             READ *, A(I,J)
         ELSE 
-        A(I,J)=O
+        A(I,J)=0
         END IF
     ENDDO 
 ENDDO
